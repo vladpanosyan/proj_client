@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/services/user/user.service";
+import { UserAuthService } from "src/app/services/auth/user-auth.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 // import { map } from "rxjs/operators";
 import { MustMatch } from "./../../../HELPERS/mutch";
@@ -16,11 +17,11 @@ export class UserRegistrationComponent implements OnInit {
   // user: any;
   registerForm: FormGroup;
   submited: false;
-  private token = "token";
 
   constructor(
     private router: Router,
     private userService: UserService,
+    private authService: UserAuthService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -36,8 +37,7 @@ export class UserRegistrationComponent implements OnInit {
       },
       {
         validator: MustMatch("password", "confPassword")
-      }
-    );
+      });
   }
 
   detectClass(field) {
@@ -58,12 +58,13 @@ export class UserRegistrationComponent implements OnInit {
     console.log(this.registerForm.value);
     const userData = this.registerForm.value;
     delete userData.confPassword;
-    console.log(userData);
-    this.userService.AddUser(userData).subscribe((data: any) => {
-      // console.log(data, 3131313);
+
+    this.userService.AddUser(userData)
+    .subscribe((data: any) => {
       if (data.firstName) {
         console.log(data, typeof data);
-        this.userService.addToken(this.token, data.token);
+        this.userService.addToken("currentUser", data);
+        this.authService.refresh(data);
         this.router.navigate([`api/users/profile`, data.id]);
       }
     }, (error) => {

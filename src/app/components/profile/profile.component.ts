@@ -10,24 +10,30 @@ import { Observable } from "rxjs";
   styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent implements OnInit {
-  data: Observable<User>;
+  data: any;
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    ) {}
+    ) {
+  this.userService.getUserProfile(this.route.snapshot.paramMap.get("id"))
+    .subscribe(data => {
+      console.log(data);
+      this.data = data;
+    });
+    }
 
   ngOnInit() {
-   this.data = this.userService.getUserProfile(this.route.snapshot.paramMap.get("id"));
-    // .subscribe(data => {
-    //   console.log(data);
-    //   this.data = data;
-    // });
+  //  this.data = this.userService.getUserProfile(this.route.snapshot.paramMap.get("id"));
+  //   // .subscribe(data => {
+  //   //   console.log(data);
+  //   //   this.data = data;
+  //   // });
   }
 }
 interface User {
   id: number;
   firstName: string;
   lastName: string;
-  time: string;
-  img: string;
+  time?: string;
+  img?: string;
 }

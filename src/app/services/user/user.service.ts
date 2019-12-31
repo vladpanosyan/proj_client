@@ -20,8 +20,8 @@ export class UserService {
     return this.http.post("api/users/register", user);
   }
 
-  addToken(name: string, token: string): void {
-    localStorage.setItem(name, token);
+  addToken(name: string, user: any): void {
+    localStorage.setItem(name, JSON.stringify(user));
   }
 
   getUserProfile(id: string): Observable<any> {
