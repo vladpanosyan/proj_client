@@ -1,0 +1,4 @@
+<h1 >Active portal</h1>
+<div class="text-center">
+    <a *ngIf="portal?.id" [routerLink]="['/api/portals', portal?.id]"> {{ portal?.name }}</a>
+</div>

@@ -1,0 +1,48 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="portalForm">
+    <!-- tittle -->
+        <div class="form-group">
+          <label for="portalTitle">Title</label>
+          <div class="input-group">
+            <input id="portalTitle" class="form-control" formControlName="title" name="title" type="text" #title>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" type="button"></button>
+            </div>
+          </div>
+    <!-- date -->
+          <label for="dateOfStart">Date of start</label>
+          <div class="input-group">
+            <input id="dateOfStart" class="form-control" formControlName="date" name="dp" type="date" #dp>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" type="button"></button>
+            </div>
+          </div>
+    <!-- time -->
+          <label for="timeOfStart">Time of start</label>
+          <div class="input-group">
+            <input id="timeOfStart" class="form-control" formControlName="time" name="time" type="time" #time>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close(portalForm)">Save</button>
+    </div>
+  </ng-template>
+  <div class="d-flex justify-content-center mt-3">
+    <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Add Portal</button>
+  </div>
+  
+  <hr>
+  
+  <pre>{{closeResult}}</pre>

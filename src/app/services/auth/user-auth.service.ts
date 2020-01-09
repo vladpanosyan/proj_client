@@ -12,22 +12,15 @@ export class UserAuthService {
   public currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem("currentUser")));
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem("currentUser"))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
-}
+  }
 
-public get currentUserValue(): User {
+  public get currentUserValue(): User {
     return this.currentUserSubject.value;
-}
-
-  // public get isLoggedIn(): boolean {
-  //   console.log(!!this.currentUserSubject.value );
-  //   return !!this.currentUserSubject.value;
-  // }
-
-  // public get currentUserValue(): string { // petq e galu GUARD jamanak, dra hamar e "currentUserSubject" @ndunum voch datark parametr
-  //   return this.currentUserSubjectToken.value;
-  // }
+  }
 
   login(username: string, password: string) {
     return this.http
@@ -41,6 +34,11 @@ public get currentUserValue(): User {
           return user;
         })
       );
+  }
+
+  regWithFace(accesToken): Observable<any> {
+    console.log("inside user-auth service", 7401);
+    return this.http.post("api/users/auth/facebook", {access_token: accesToken});
   }
 
   refresh(data) {

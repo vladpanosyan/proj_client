@@ -5,30 +5,34 @@
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent d-flex justify-content-end">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item active" [routerLinkActive]="['is-active']">
           <a class="nav-link" routerLink="/"><span class="sr-only">(current)</span>Main</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" [routerLinkActive]="['is-active']">
           <a *ngIf="currentUser" class="nav-link" routerLink="/api/users/home">Home</a>
         </li>
-        <li *ngIf="currentUser" class="nav-item">
+        <li *ngIf="currentUser" class="nav-item" [routerLinkActive]="['is-active']">
           <a class="nav-link" [routerLink]="['/api/users/profile', currentUser.id]">MyProfile</a>
         </li>
-        <li *ngIf="currentUser" class="nav-item">
-          <a class="nav-link" routerLink="">Portals</a>
+        <li *ngIf="currentUser" class="nav-item" [routerLinkActive]="['is-active']">
+          <a class="nav-link" routerLink="api/portals">Portals</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" [routerLinkActive]="['is-active']">
           <a *ngIf="!currentUser" class="nav-link" routerLink="api/users/register">Registration</a>
         </li>
        
-        <li *ngIf="!currentUser" class="nav-item">
+        <li *ngIf="!currentUser" class="nav-item" [routerLinkActive]="['is-active']">
           <a class="nav-link" routerLink="api/users/login">Login</a>
         </li>
         <li *ngIf="currentUser" class="nav-item">
           <a class="nav-link" (click)="logout()" href="#">LogOut</a>
         </li>
          <li>
-          <a class="nav-link" [routerLink]="['/api/users/profile', '40']">TEST</a>
+          <a class="nav-link" [routerLink]="['/api/users/home']">TEST</a>
+        </li>
+         <li *ngIf="currentUser" class="d-flex align-items-center">
+          <!-- <a class="nav-link" [routerLink]="['/api/users/profile', '40']">TEST</a> -->
+          <img [src]="currentUser?.img" alt="" width="30" height="30" class="rounded">
         </li>
       </ul>
     </div>

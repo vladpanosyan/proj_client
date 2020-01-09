@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { UserService } from "./services/user/user.service";
 import { UserAuthService } from "./services/auth/user-auth.service";
+import { PortalService } from "./services/portal/portal.service";
 import { InterceptorService } from "./services/interceptor/interceptor.service";
 import { JwtInterceptor } from "./services/interceptor/interceptorJWT.service";
 // forms
@@ -13,8 +14,12 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { UserRegistrationComponent } from "./components/registration/user-registration/user-registration.component";
 import { UserLoginComponent } from "./components/login/user-login/user-login.component";
 import { ProfileComponent } from "./components/profile/profile.component";
+import { PortalComponent } from "src/app/components/portal/portal.component";
+import { PortalDetailComponent } from "src/app/components/portal/portal-detail/portal-detail.component";
 import { HomeComponent } from "./components/home/home.component";
 import { CoverComponent } from "./components/cover/cover.component";
+import { PortalModalComponent  } from "./components/home/portal-modal/portal-modal.component";
+
 // guard
 import { AuthGuard } from "./guards/auth.guard";
 
@@ -30,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: "api/users/home",
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "api/users/register",
@@ -41,11 +47,23 @@ const routes: Routes = [
     component: UserLoginComponent
   },
   {
+    path: "api/portals/:id",
+    component: PortalDetailComponent
+  },
+  {
+    path: "api/portals",
+    component: PortalComponent
+  },
+  // {
+  //   path: "api/users/auth/facebook",
+  //   component: ProfileComponent
+  // },
+  {
     path: "api/users/profile/:id",
     // redirectTo: "api/users/profile",
     // pathMatch: "full",
     component: ProfileComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -55,7 +73,10 @@ const routes: Routes = [
     UserLoginComponent,
     ProfileComponent,
     HomeComponent,
-    CoverComponent
+    PortalComponent,
+    PortalDetailComponent,
+    CoverComponent,
+    PortalModalComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -67,6 +88,7 @@ const routes: Routes = [
   providers: [
     UserService,
     UserAuthService,
+    PortalService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,

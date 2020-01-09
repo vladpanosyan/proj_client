@@ -6,5 +6,5 @@ export class User {
     time?: string;
     email?: string;
     password?: string;
-    token?: string;
+    access_token?: string;
 }

@@ -1,0 +1,13 @@
+* {
+    -webkit-box-sizing: border-box!important; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box!important;    /* Firefox, other Gecko */
+    box-sizing: border-box!important;
+}
+ul > li {
+    margin-right: 5px;
+}
+.is-active {
+    border-bottom: 3px solid #333333;
+    padding: 0;
+    margin: 0;
+}

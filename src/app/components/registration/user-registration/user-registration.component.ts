@@ -2,8 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/services/user/user.service";
 import { UserAuthService } from "src/app/services/auth/user-auth.service";
+import { AuthService } from "angularx-social-login";
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider
+} from "angularx-social-login";
+
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-// import { map } from "rxjs/operators";
+// import { switchmap } from "rxjs/operators";
 import { MustMatch } from "./../../../HELPERS/mutch";
 
 import { User } from "./../../../models/user";
@@ -17,11 +23,13 @@ export class UserRegistrationComponent implements OnInit {
   // user: any;
   registerForm: FormGroup;
   submited: false;
+  loggedIn: boolean;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private authService: UserAuthService,
+    private socialAuthService: AuthService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -38,6 +46,20 @@ export class UserRegistrationComponent implements OnInit {
       {
         validator: MustMatch("password", "confPassword")
       });
+    //
+    this.socialAuthService.authState
+    .subscribe(user => {
+      // this.loggedIn = user != null;
+      if (user) {
+        this.authService.regWithFace(user.authToken)
+        .subscribe((response: any) => {
+          this.userService.addToken("currentUser", response);
+          this.authService.refresh(response);
+          this.router.navigate([`api/users/profile`, response.id]);
+        });
+      }
+    },
+    error => console.log(error, 85858585));
   }
 
   detectClass(field) {
@@ -54,21 +76,39 @@ export class UserRegistrationComponent implements OnInit {
     }
   }
 
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+  signInWithFB(): void {
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  }
+  // signOut(): void {
+  //   this.socialAuthService.signOut();
+  // }
+
+  // FC_Login() {
+  //   console.log("in user-registration component");
+  //   this.authService.regWithFace()
+  //   .subscribe(x => console.log(x), err => console.log(err, 2109));
+  // }
+
   onSubmit() {
     console.log(this.registerForm.value);
     const userData = this.registerForm.value;
     delete userData.confPassword;
 
-    this.userService.AddUser(userData)
-    .subscribe((data: any) => {
-      if (data.firstName) {
-        console.log(data, typeof data);
-        this.userService.addToken("currentUser", data);
-        this.authService.refresh(data);
-        this.router.navigate([`api/users/profile`, data.id]);
+    this.userService.AddUser(userData).subscribe(
+      (data: any) => {
+        if (data.firstName) {
+          console.log(data, typeof data);
+          this.userService.addToken("currentUser", data);
+          this.authService.refresh(data);
+          this.router.navigate([`api/users/profile`, data.id]);
+        }
+      },
+      error => {
+        this.user = error.userData;
       }
-    }, (error) => {
-      this.user = error.userData;
-    });
+    );
   }
 }
