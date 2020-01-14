@@ -25,10 +25,10 @@ export class PortalModalComponent implements OnInit {
     this.portalForm = this.formBuilder.group({
       title: [null, Validators.required],
       date: [null, Validators.required],
-      time: [null, Validators.required]
+      time: [null, Validators.required],
+      private: null
     });
     this.authService.currentUser.subscribe((x: any) => {
-      console.log(x, 7401);
       this.currentUser = x;
     });
 
@@ -49,10 +49,8 @@ export class PortalModalComponent implements OnInit {
           }
           const portalData = result.value;
           const userId = this.currentUser.id;
-          console.log(userId, 55555555555555);
           const UTCtime = UTCtimeCreator(portalData.date, portalData.time);
-          // console.log(this.portalService.addPortal, typeof this.portalService.addPortal);
-          this.portalService.addPortal({start: UTCtime, userId, name: portalData.title})
+          this.portalService.addPortal({start: UTCtime, userId, name: portalData.title, private: +portalData.private})
           .subscribe(portal => console.log(portal, 23323));
         },
         reason => {

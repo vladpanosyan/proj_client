@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/services/user/user.service";
 import { ActivatedRoute } from "@angular/router";
 
-import { Observable } from "rxjs";
+// import { Observable } from "rxjs";
 
 @Component({
   selector: "app-profile",
@@ -11,9 +11,12 @@ import { Observable } from "rxjs";
 })
 export class ProfileComponent implements OnInit {
   data: any;
-  constructor(private route: ActivatedRoute, private userService: UserService) {
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService
+    ) {
     const userId = this.route.snapshot.paramMap.get("id");
-    const userToken = this.route.snapshot.paramMap.get("token");
+    // const userToken = this.route.snapshot.paramMap.get("token");
 
     if (userId) {
       this.userService.getUserProfile(userId).subscribe(data => {
@@ -21,13 +24,13 @@ export class ProfileComponent implements OnInit {
         this.data = data;
       });
     }
-    if (userToken) {
-      this.userService.addToken("access_token", userToken);
-      this.userService.getUserProfileSocial(userToken).subscribe(data => {
-        console.log(data, 93939393939);
-        this.data = data;
-      });
-    }
+    // if (userToken) {
+    //   this.userService.addToken("access_token", userToken);
+    //   this.userService.getUserProfileSocial(userToken).subscribe(data => {
+    //     console.log(data, 93939393939);
+    //     this.data = data;
+    //   });
+    // }
   }
 
   ngOnInit() {

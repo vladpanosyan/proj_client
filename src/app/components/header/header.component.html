@@ -9,28 +9,28 @@
           <a class="nav-link" routerLink="/"><span class="sr-only">(current)</span>Main</a>
         </li>
         <li class="nav-item" [routerLinkActive]="['is-active']">
-          <a *ngIf="currentUser" class="nav-link" routerLink="/api/users/home">Home</a>
+          <a *ngIf="isLoggedIn" class="nav-link" routerLink="/api/users/home">Home</a>
         </li>
-        <li *ngIf="currentUser" class="nav-item" [routerLinkActive]="['is-active']">
+        <li *ngIf="isLoggedIn" class="nav-item" [routerLinkActive]="['is-active']">
           <a class="nav-link" [routerLink]="['/api/users/profile', currentUser.id]">MyProfile</a>
         </li>
-        <li *ngIf="currentUser" class="nav-item" [routerLinkActive]="['is-active']">
+        <li *ngIf="isLoggedIn" class="nav-item" [routerLinkActive]="['is-active']">
           <a class="nav-link" routerLink="api/portals">Portals</a>
         </li>
         <li class="nav-item" [routerLinkActive]="['is-active']">
-          <a *ngIf="!currentUser" class="nav-link" routerLink="api/users/register">Registration</a>
+          <a *ngIf="!isLoggedIn" class="nav-link" routerLink="api/users/register">Registration</a>
         </li>
        
-        <li *ngIf="!currentUser" class="nav-item" [routerLinkActive]="['is-active']">
+        <li *ngIf="!isLoggedIn" class="nav-item" [routerLinkActive]="['is-active']">
           <a class="nav-link" routerLink="api/users/login">Login</a>
         </li>
-        <li *ngIf="currentUser" class="nav-item">
+        <li *ngIf="isLoggedIn" class="nav-item">
           <a class="nav-link" (click)="logout()" href="#">LogOut</a>
         </li>
          <li>
-          <a class="nav-link" [routerLink]="['/api/users/home']">TEST</a>
+          <a class="nav-link" [routerLink]="['/api/portals/c-OAoFMLru5uv3u1DKIvtEbatSGlMyM8482L-GLpG0E']">TEST</a>
         </li>
-         <li *ngIf="currentUser" class="d-flex align-items-center">
+         <li *ngIf="isLoggedIn" class="d-flex align-items-center">
           <!-- <a class="nav-link" [routerLink]="['/api/users/profile', '40']">TEST</a> -->
           <img [src]="currentUser?.img" alt="" width="30" height="30" class="rounded">
         </li>

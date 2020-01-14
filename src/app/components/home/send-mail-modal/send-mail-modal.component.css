@@ -1,0 +1,21 @@
+form div div .ng-dirty.ng-valid {
+    border: 1px solid green
+}
+form div div .ng-dirty.ng-invalid {
+    border: 1px solid red
+}
+
+.add {
+    display: flex;
+    justify-content: center;
+    /* position: absolute; */
+    width: 100%;
+}
+.modal-footer {
+    /* position: relative; */
+}
+
+.add > i {
+    font-size: 25px!important;
+    color: blue;
+}

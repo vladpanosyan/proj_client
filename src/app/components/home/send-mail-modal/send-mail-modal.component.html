@@ -1,0 +1,30 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="sendMailForm">
+        <p>{{ url }}</p>
+        <p [ngStyle]="{'color': 'red'}" *ngIf="fails">Wrong Email Format </p>
+        <div formArrayName="emails">
+          <div class="form-group" *ngFor="let item of inpArray.controls; let inputIndex=index; let i=index" [formGroupName]="inputIndex">
+
+            <label for="dateOfBirth"></label>
+            <div class="input-group">
+              <input id="sendMail" class="form-control" formControlName="email" name="mail" placeholder="Email">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex">
+      <div class="add"><i class="fas fa-plus-circle" (click)="addInput()"></i></div>
+      <button type="button" class="btn btn-outline-dark" (click)="checkFormValid(sendMailForm) && modal.close(sendMailForm.controls.emails)">Save</button>
+    </div>
+  </ng-template>
+  
+  <button class="btn btn-warning" (click)="open(content)">Share</button>
+  

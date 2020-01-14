@@ -1,0 +1,10 @@
+.col {
+    flex-grow: 0!important;
+    padding-right: 0!important;
+}
+.row {
+    margin-left: 0!important;
+}
+.dropdown-toggle::after {
+    display: none!important;
+}

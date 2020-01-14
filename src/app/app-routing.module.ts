@@ -1,13 +1,16 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 // services
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { UserService } from "./services/user/user.service";
 import { UserAuthService } from "./services/auth/user-auth.service";
 import { PortalService } from "./services/portal/portal.service";
+import { NickNameService } from "./services/nickName/nick-name.service";
 import { InterceptorService } from "./services/interceptor/interceptor.service";
 import { JwtInterceptor } from "./services/interceptor/interceptorJWT.service";
+import { ChatService } from "./services/chat/chat.service";
 // forms
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 // components
@@ -19,9 +22,16 @@ import { PortalDetailComponent } from "src/app/components/portal/portal-detail/p
 import { HomeComponent } from "./components/home/home.component";
 import { CoverComponent } from "./components/cover/cover.component";
 import { PortalModalComponent  } from "./components/home/portal-modal/portal-modal.component";
+import { SendMailModalComponent } from "src/app/components/home/send-mail-modal/send-mail-modal.component";
 
+import { ChatListComponent } from "./components/portal/portal-detail/chat-list/chat-list.component";
+import { Top10ListComponent } from "./components/portal/portal-detail/top10-list/top10-list.component";
+import { MessageComponent } from "./components/portal/portal-detail/message/message.component";
+import { QuestionComponent } from "./components/portal/portal-detail/question/question.component";
+import { SettingsComponent } from "./components/portal/portal-detail/settings/settings.component";
 // guard
 import { AuthGuard } from "./guards/auth.guard";
+import { SubscriberGuard } from "./guards/subscriber.guard";
 
 const routes: Routes = [
   {
@@ -44,11 +54,12 @@ const routes: Routes = [
   },
   {
     path: "api/users/login",
-    component: UserLoginComponent
+    component: UserLoginComponent,
   },
   {
-    path: "api/portals/:id",
-    component: PortalDetailComponent
+    path: "api/portals/:token",
+    component: PortalDetailComponent,
+    canActivate: [SubscriberGuard]
   },
   {
     path: "api/portals",
@@ -76,7 +87,13 @@ const routes: Routes = [
     PortalComponent,
     PortalDetailComponent,
     CoverComponent,
-    PortalModalComponent
+    PortalModalComponent,
+    SendMailModalComponent,
+    ChatListComponent,
+    Top10ListComponent,
+    MessageComponent,
+    QuestionComponent,
+    SettingsComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -84,11 +101,14 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
+    NgbModule,
   ],
   providers: [
     UserService,
     UserAuthService,
     PortalService,
+    NickNameService,
+    ChatService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,

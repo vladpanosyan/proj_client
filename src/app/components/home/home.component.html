@@ -1,5 +1,6 @@
 <!-- <h2>To add Portal Click here</h2> -->
 <app-portal-modal></app-portal-modal>
+<!-- <app-send-mail-modal></app-send-mail-modal> -->
 <table class="table">
     <thead class="thead-dark">
       <tr>
@@ -8,6 +9,7 @@
         <th scope="col">Start</th>
         <th scope="col">link</th>
         <th scope="col">Left</th>
+        <th scope="col">Share</th>
         <th scope="col">GO</th>
         <th scope="col">Remove</th>
       </tr>
@@ -19,9 +21,11 @@
         <td>{{ item.start }}</td>
         <td>{{ portalUrlPath+item.token }}</td>
         <td>{{(item.counter | async)}}</td>
+        <td><button><app-send-mail-modal [url]="portalUrlPath+item.token"></app-send-mail-modal></button></td>
         <td><button [disabled]="item.isStarted" class="btn btn-success" (click)="startEvent(item.id, item.token)">Start</button></td>
         <td><button class="btn btn-danger" [attr.data-portal]="item.id">Remove</button></td>
       </tr>
-
     </tbody>
   </table>
+
+

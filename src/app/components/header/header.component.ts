@@ -11,15 +11,16 @@ import { Router } from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
   currentUser;
-  // curentUser;
+  isLoggedIn: boolean;
   constructor(
     private router: Router,
     public authService: UserAuthService,
-    // private socialAuthService: AuthService,
     ) {
-      // this.currentUserToken = this.authService.isLoggedIn;
       this.authService.currentUser.subscribe((x: any) => {
         this.currentUser = x;
+      });
+      this.authService.isLoggedIn.subscribe((x: boolean) => {
+        this.isLoggedIn = x;
       });
   }
   ngOnInit() {

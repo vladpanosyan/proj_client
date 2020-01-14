@@ -2,14 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/services/user/user.service";
 import { UserAuthService } from "src/app/services/auth/user-auth.service";
-import { AuthService } from "angularx-social-login";
-import {
-  FacebookLoginProvider,
-  GoogleLoginProvider
-} from "angularx-social-login";
+// import { AuthService } from "angularx-social-login";
+// import {
+//   FacebookLoginProvider,
+//   GoogleLoginProvider
+// } from "angularx-social-login";
 
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-// import { switchmap } from "rxjs/operators";
 import { MustMatch } from "./../../../HELPERS/mutch";
 
 import { User } from "./../../../models/user";
@@ -29,12 +28,11 @@ export class UserRegistrationComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private authService: UserAuthService,
-    private socialAuthService: AuthService,
+    // private socialAuthService: AuthService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    // this.userService.getUser().subscribe(data => this.user = JSON.stringify(data, null, 2));
     this.registerForm = this.formBuilder.group(
       {
         firstName: [null, [Validators.required]],
@@ -46,20 +44,7 @@ export class UserRegistrationComponent implements OnInit {
       {
         validator: MustMatch("password", "confPassword")
       });
-    //
-    this.socialAuthService.authState
-    .subscribe(user => {
-      // this.loggedIn = user != null;
-      if (user) {
-        this.authService.regWithFace(user.authToken)
-        .subscribe((response: any) => {
-          this.userService.addToken("currentUser", response);
-          this.authService.refresh(response);
-          this.router.navigate([`api/users/profile`, response.id]);
-        });
-      }
-    },
-    error => console.log(error, 85858585));
+    this.authService.socialStateCheck();
   }
 
   detectClass(field) {
@@ -76,11 +61,12 @@ export class UserRegistrationComponent implements OnInit {
     }
   }
 
-  signInWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
+  // signInWithGoogle(): void {
+  //   this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  // }
   signInWithFB(): void {
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    // this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    this.authService.signInWithFB();
   }
   // signOut(): void {
   //   this.socialAuthService.signOut();

@@ -1,0 +1,8 @@
+<div class="text_container d-flex">
+    <div class="txt_area">
+        <textarea class="form-control form-rounded msg" rows="3" #msg [(ngModel)]="message"></textarea>
+    </div>
+    <div class="sendbtn">
+        <button class="btn btn-dark" (click)="sendMessage(msg.value)">Send</button>
+    </div>
+</div>

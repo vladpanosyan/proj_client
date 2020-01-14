@@ -1,0 +1,24 @@
+.text_container {
+    margin: 10px;
+}
+
+body {margin:2rem;}
+
+.form-rounded {
+border-radius: 1rem;
+}
+
+.txt_area {
+    width: 80%;
+}
+.sendbtn {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+}
+.msg {
+    resize: none;
+    width: 100%;
+}
+

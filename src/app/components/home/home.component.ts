@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   started: boolean;
   portal;
   timetoStart = false;
-  portalUrlPath = "https://postgroup/portal/";
+  portalUrlPath = "http://localhost:3000/api/portals/";
   portalData: any[];
   destroy$: Subject<boolean> = new Subject<boolean>();
 

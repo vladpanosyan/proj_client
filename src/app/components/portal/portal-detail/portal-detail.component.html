@@ -1,1 +1,21 @@
-<p>portal-detail works!</p>
+<pre>{{ nickData | json}}</pre>
+<p>{{ token }}</p>
+<ngbd-dropdown-basic></ngbd-dropdown-basic>
+<div class="wrapper d-flex">
+    <div class="messages d-flex">
+        <div class="top d-flex">
+            <div class="chat_list">
+                <app-chat-list></app-chat-list>
+            </div>
+            <div class="top10_list">
+                <app-top10-list></app-top10-list>
+            </div>
+        </div>
+        <div class="wrote_messages">
+            <app-message></app-message>
+        </div>
+    </div>
+    <div class="questions">
+        <app-question [questions]="messages"></app-question>
+    </div>       
+</div>
