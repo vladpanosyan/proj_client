@@ -1,7 +1,8 @@
 <p>cover works!</p>
 <div>
     <ul *ngFor="let item of portalData">
-        <li *ngIf="!item.private"><a [ngClass]="{disabled: !item.isStarted}" (click)="openModal(item.id, item.token, false)">{{ item.name }}</a>{{item.private ? '-private' : '-public'}}</li>
-        <li *ngIf="item.private"><a [ngClass]="{disabled: !item.isStarted}" (click)="openModal(item.id, item.token, true)">{{ item.name }}</a>{{item.private ? '-private' : '-public'}}</li>
+        <li *ngIf="item.name && !item.private"><a [ngClass]="{disabled: !item.isStarted}" (click)="openModal(item.id, item.token, false, item.userId)">{{ item.name }}</a>{{item.private ? '-private' : '-public'}} ------ {{ item.userId }}</li>
+        <li *ngIf="item.name && item.private"><a [ngClass]="{disabled: !item.isStarted}" (click)="openModal(item.id, item.token, true, item.userId)">{{ item.name }}</a>{{item.private ? '-private' : '-public'}}  ------ {{ item.userId }}</li>
     </ul>
+    <span></span>
 </div>

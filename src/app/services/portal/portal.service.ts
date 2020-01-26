@@ -19,6 +19,12 @@ export class PortalService {
   portalStatusSubject: Subject<Port>;
   portalState: Observable<Port>;
 
+  currentPortalIdSubject: BehaviorSubject<string>;
+
+  currentUserPortals: BehaviorSubject<any>;
+
+  // isPortalOfUser: BehaviorSubject<boolean>;
+
   constructor(private http: HttpClient) {
     this.portalSubject = new BehaviorSubject<any>({});
     this.portal = this.portalSubject.asObservable();
@@ -26,7 +32,24 @@ export class PortalService {
     this.portalStatusSubject = new Subject();
     this.portalState = this.portalStatusSubject.asObservable();
 
+    this.currentPortalIdSubject = new BehaviorSubject("");
+
+    this.currentUserPortals = new BehaviorSubject([]);
+
+    // this.isPortalOfUser = new BehaviorSubject(false);
   }
+
+  get getPortalId() {
+    return this.currentPortalIdSubject.value;
+  }
+
+  get getCurentUserPortals() {
+    return this.currentUserPortals.value;
+  }
+
+  // get getIsPortalofUser {
+  //   return this.isPortalOfUser.value;
+  // }
 
   addPortal(data: any): Observable<any> {
     return this.http
@@ -49,6 +72,16 @@ export class PortalService {
     .get("api/portals/getAll");
   }
 
+  getUserPortals(userId): Observable<any> {
+    return this.http
+    .post("api/portals/getUserPortals", {userId}).pipe(
+      map( portals => {
+        this.currentUserPortals.next(portals);
+        return portals;
+      })
+    );
+  }
+
   getActivePortal() {
     return this.http
     .get("api/portals/active");
@@ -57,5 +90,11 @@ export class PortalService {
   chekPortalStatus(token): Observable<any> {
     return this.http
     .post("api/portals/portalStatus", {token});
+  }
+  //
+  isPortalisMakeUser(portalid) {
+    const userPortals = this.getCurentUserPortals;
+    const isExist = userPortals.find(item => item.id === portalid);
+    return isExist;
   }
 }

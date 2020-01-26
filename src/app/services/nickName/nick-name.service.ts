@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, of } from "rxjs";
 
 import { map } from "rxjs/operators";
+// import { PreloadAllModules } from '@angular/router';
+
 
 @Injectable({
   providedIn: "root"
@@ -26,18 +28,28 @@ export class NickNameService {
     return this.currentNickSubjectToken.value;
   }
 
-  isSubscriberAuth(): Observable<any> {
+  isSubscriberAuth(portalToken): Observable<any> {
     const nickToken = this.getNickToken;
     if (nickToken) {
       return this.http
-      .post("api/nicknames/isLogged", {nickToken});
+      .post("api/nicknames/canactivate", { portalToken, nickToken });
     }
-    return of(false);
+    return of(null);
   }
 
-  createNickname(nickName, portalId): Promise<any> {
+  isSubAuth(portalId): Promise<any> {
+    const nickToken = this.getNickToken;
+    if (nickToken) {
+      return this.http
+      .post("api/nicknames/isLogged", {nickToken, portalId})
+      .toPromise();
+    }
+    return Promise.resolve(null);
+  }
+
+  createNickname(nickName, portalId, nickToken): Promise<any> {
     return this.http
-      .post("api/nicknames/addNickname", { nickName, portalId })
+      .post("api/nicknames/addNickname", { nickName, portalId, nickToken})
       .pipe(
         map(nick => {
           this.currentNickSubjectToken.next(nick["token"]);

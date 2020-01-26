@@ -1,5 +1,43 @@
-<ul>
-    <li *ngFor="let item of questions">
-        {{ item }}
-    </li>
-</ul>
+<div class="comp_container">
+    <div class="card-header">
+        <div class="d-flex bd-highlight">
+            <div class="img_cont">
+                <img [src]="inUserPortal ? userData.img : nickData.image" class="rounded-circle user_img">
+                <span class="online_icon"></span>
+            </div>
+            <div class="user_info">
+                <span>Chat with {{ inUserPortal ? userData.name : nickData.name }}</span>
+                <p>1767 Messages</p>
+            </div>
+        </div>
+    </div>
+    <div class="msg_cont ">
+        <!-- <h1>{{ ggg() }}</h1> -->
+        <ul class="card-body msg_card_body scrollbar scrollbar-near-moon">
+            <div class="force-overflow"></div>
+            <li *ngFor="let item of questions; let i=index"
+                class="d-flex justify-content-start mb-4 flex-column">
+                <!-- {{ item | json }}  -->
+                <div class="name" style="color: #AAB8C2">{{ item.nickss.name }}</div>
+                <div class="img_name d-flex flex-column">
+                    <div class="img_msg_wrap d-flex">
+                        <div class="img_cont_msg">
+                            <img [src]="item.nickss.image" alt="" class="rounded-circle user_img_msg">
+                        </div>
+                        <div class="msg_cotainer">
+                            {{ item.question }}
+                        </div>
+                    </div>
+                    <div class="metta d-flex">
+                        <span class="msg_time">{{ item.time | date: 'medium' }}</span>
+                        <span [class.is-active]="item.isLiked || isNickLiked(item)" class="like-btn" (click)="action(item, i)"></span>
+                        <!-- <span class="like_count"
+                            style="color:#FAD00E">{{item.likes ? item.likes : item.questionManyLikes ? item.questionManyLikes[0]?.likeTotal : null}}</span> -->
+                        <span class="like_count"
+                            style="color:#FAD00E">{{ item.likes ? item.likes : item.likes !== null ? item.questionManyLikes : null }}</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

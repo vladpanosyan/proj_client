@@ -1,21 +1,34 @@
-<pre>{{ nickData | json}}</pre>
-<p>{{ token }}</p>
-<ngbd-dropdown-basic></ngbd-dropdown-basic>
+<!-- <pre *ngIf="nickData?.id">{{ nickData | json}}</pre>
+<pre *ngIf="userData?.id">{{ userData | json}}</pre> -->
+<!-- <p>{{ token }}</p> -->
+<div class="nick_header d-flex">
+    <div class="nick_data d-flex">
+        <h4> {{inUserPortal ? userData.firstName : nickData.name}} </h4> -->
+        <img [src]="inUserPortal ? userData.img : nickData.image" alt="">
+    </div>
+    <ngbd-dropdown-basic></ngbd-dropdown-basic>
+</div>
 <div class="wrapper d-flex">
     <div class="messages d-flex">
         <div class="top d-flex">
             <div class="chat_list">
-                <app-chat-list></app-chat-list>
+                <app-chat-list [answers]="answers"></app-chat-list>
             </div>
             <div class="top10_list">
                 <app-top10-list></app-top10-list>
             </div>
         </div>
         <div class="wrote_messages">
-            <app-message></app-message>
+            <app-message [nickData]="nickData" [userData]="userData"></app-message>
         </div>
     </div>
+    <!-- #scrollMe [scrollTop]="scrollMe.scrollHeight" -->
+
+    <!-- <div class="questions scrollbar scrollbar-near-moon">
+        <div class="force-overflow"></div> -->
     <div class="questions">
-        <app-question [questions]="messages"></app-question>
+        <!-- <div class="force-overflow"></div> -->
+        <!-- [question]="messages" [nickData]="nickData" [userData]="userData" [inUserPortal]="inUserPortal" -->
+        <app-question [question]="messages" [nickData]="nickData" [userData]="userData" [inUserPortal]="inUserPortal"></app-question>
     </div>       
 </div>

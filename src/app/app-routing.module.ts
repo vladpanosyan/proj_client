@@ -10,7 +10,9 @@ import { PortalService } from "./services/portal/portal.service";
 import { NickNameService } from "./services/nickName/nick-name.service";
 import { InterceptorService } from "./services/interceptor/interceptor.service";
 import { JwtInterceptor } from "./services/interceptor/interceptorJWT.service";
-import { ChatService } from "./services/chat/chat.service";
+// import { ChatService } from "./services/chat/chat.service";
+import { QuestionService } from "./services/question/question.service";
+
 // forms
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 // components
@@ -108,7 +110,8 @@ const routes: Routes = [
     UserAuthService,
     PortalService,
     NickNameService,
-    ChatService,
+    // ChatService,
+    QuestionService,
     {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,

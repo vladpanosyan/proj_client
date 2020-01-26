@@ -17,15 +17,15 @@ export class AppComponent implements OnInit {
     private userAuthService: UserAuthService,
     private socket: Socket
     ) {
-    const source = fromEvent(window, "storage");
-    // source.pipe(map(event => ))
-    source.subscribe( (e: any) => {
-      // if (!e.key && !e.newValue) {
-      //   this.userAuthService.logout();
-      //   this.userAuthService.signOut();
-      // }
-      console.log(e, 23232323);
-    });
+    // const source = fromEvent(window, "storage");
+    // // source.pipe(map(event => ))
+    // source.subscribe( (e: any) => {
+    //   // if (!e.key && !e.newValue) {
+    //   //   this.userAuthService.logout();
+    //   //   this.userAuthService.signOut();
+    //   // }
+    //   console.log(e, 23232323);
+    // });
   }
   ngOnInit() {
     this.socket.connect();

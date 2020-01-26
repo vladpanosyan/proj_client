@@ -5,6 +5,7 @@ import { Observable, Subject, interval } from "rxjs";
 import { map, filter, takeUntil } from "rxjs/operators";
 // import { formattedError } from '@angular/compiler';
 import { timer } from "src/app/HELPERS/backwardTimer";
+import { UserAuthService } from 'src/app/services/auth/user-auth.service';
 
 @Component({
   selector: "app-home",
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private portalService: PortalService,
+    private userAuthService: UserAuthService,
     private router: Router,
     ) {
     this.portalData = [];
@@ -43,7 +45,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   setupTimes(portals, time) {
-    console.log(portals, time, 666777666);
     return portals.reduce((arr, element, ind) => {
       const timeStart = element.start;
       const localDate = this.makeCurrentDate(timeStart);
@@ -75,7 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         const t = this.foo(time);
         if (!(t || this.started)) {
           this.started = true;
-          console.log(7777);
           return "Started";
         }
         return t;
@@ -95,16 +95,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.portalService.startEvent(id, token)
     .subscribe(resp => {
       if (resp) {
-        this.router.navigate([`api/portals`, id]);
+        this.router.navigate([`api/portals`, token]);
       }
     });
   }
 
   ngOnInit() {
+    const userId = this.userAuthService.currentUserValue.id;
     this.started = false;
     this.portalData = [];
     // get all portals
-    this.portalService.getAll().subscribe(portals => {
+    this.portalService.getUserPortals(userId).subscribe(portals => {
       const StartTime = this.extractStartDate(portals);
       this.portalData = this.setupTimes(portals, StartTime);
     });

@@ -4,7 +4,7 @@ import { AuthService } from "angularx-social-login";
 import { UserService } from "src/app/services/user/user.service";
 import { Router } from "@angular/router";
 
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { User } from "./../../models/user";
 import {
@@ -25,10 +25,11 @@ export class UserAuthService {
     private http: HttpClient,
     private socialAuthService: AuthService,
     private userService: UserService,
-    private router: Router,
-
-    ) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem("currentUser")));
+    private router: Router
+  ) {
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem("currentUser"))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
 
     this.isLoggedSubject = new BehaviorSubject<boolean>(false);
@@ -43,11 +44,27 @@ export class UserAuthService {
     return this.isLoggedSubject.value;
   }
 
+  isAuthforGuard(): Observable<any> {
+    const accessToken = this.currentUserValue && this.currentUserValue.access_token;
+    if (accessToken) {
+      const res = this.http.post("api/users/checkTokenValid", { accessToken });
+      return res;
+      // if (res) {
+      //   return of(true);
+      // } else {
+      //   return of(false);
+      // }
+    }
+  }
+
   async isAuthenticated(): Promise<any> {
     // tslint:disable-next-line: variable-name
-    const access_token = this.currentUserValue && this.currentUserValue.access_token;
-    if (access_token) {
-      const res = await this.http.post("api/users/checkTokenValid", { access_token }).toPromise();
+    const accessToken =
+      this.currentUserValue && this.currentUserValue.access_token;
+    if (accessToken) {
+      const res = await this.http
+        .post("api/users/checkTokenValid", { accessToken })
+        .toPromise();
       console.log(res, 7474747474);
       if (res) {
         return res;
@@ -81,18 +98,19 @@ export class UserAuthService {
   }
   socialStateCheck() {
     this.socialAuthService.authState // avtomat berume token@
-      .subscribe(user => {
-        // this.loggedIn = user != null;
-        if (user) {
-          this.regWithFace(user.authToken)
-          .subscribe((response: any) => {
-            this.userService.addToken("currentUser", response);
-            this.refresh(response);
-            this.router.navigate([`api/users/profile`, response.id]);
-          });
-        }
-      },
-      error => console.log(error, 85858585));
+      .subscribe(
+        user => {
+          // this.loggedIn = user != null;
+          if (user) {
+            this.regWithFace(user.authToken).subscribe((response: any) => {
+              this.userService.addToken("currentUser", response);
+              this.refresh(response);
+              this.router.navigate([`api/users/profile`, response.id]);
+            });
+          }
+        },
+        error => console.log(error, 85858585)
+      );
   }
 
   signInWithGoogle(): void {

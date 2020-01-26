@@ -3,6 +3,6 @@
         <textarea class="form-control form-rounded msg" rows="3" #msg [(ngModel)]="message"></textarea>
     </div>
     <div class="sendbtn">
-        <button class="btn btn-dark" (click)="sendMessage(msg.value)">Send</button>
+        <button class="btn btn-dark" (click)="isUserInSelfPortal ? sendMessgeQuestion(msg.value) : sendMessage(msg.value)">Send</button>
     </div>
 </div>

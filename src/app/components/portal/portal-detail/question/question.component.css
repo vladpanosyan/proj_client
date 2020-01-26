@@ -1,0 +1,113 @@
+li {
+    list-style: none;
+}
+.msg_card_body{
+    overflow-y: auto;
+    max-height: 470px;
+}
+/* .scr {
+    width: 100%;
+    height: 100%;
+} */
+.user_img_msg{
+    height: 40px;
+    width: 40px;
+    border:1.5px solid #f5f6fa;
+}
+
+/*  */
+.img_cont_msg{
+    height: 40px;
+    width: 40px;
+}
+.img_name {
+    display: flex;
+}
+.name {
+    margin-left: -15px;
+}
+/*  */
+.msg_cotainer{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    border-radius: 25px;
+    background-color: #82ccdd;
+    padding: 10px;
+    position: relative;
+}
+.msg_time{
+    width: 115px;
+    margin-top: 2px;
+    margin-left: 50px;
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+}
+
+/* user card style */
+
+.card-header{
+    border-radius: 15px 15px 0 0 !important;
+    border-bottom: 1px solid #f5f6fa !important;
+}
+.user_info {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+.user_img {
+    height: 70px;
+    width: 70px;
+    border: 1.5px solid #f5f6fa;
+}
+.metta {
+    margin-top: 5px;
+    margin-bottom: -60px;
+}
+
+/* like */
+@keyframes animate {
+    0%   { background-position: left;  }
+    50%  { background-position: right; }
+    100% { background-position: right; }
+}
+
+.is-active, .is-active1 {
+  animation-name: animate;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: steps(28);
+  animation-fill-mode: forwards;
+}
+
+
+.like-btn {
+    position: relative;
+    top: -20px;
+    background: url('../../../../../../../public/images/twitter-heart.png');
+    width: 60px;
+    height: 60px;
+    background-size: 2900%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+.like_count {
+    margin-top: -3px;
+}
+/* scroll */
+.scrollbar-near-moon::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px; }
+    
+    .scrollbar-near-moon::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5; }
+    
+    .scrollbar-near-moon::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-image: -webkit-gradient(linear, left bottom, left top, from(#5ee7df), to(#b490ca));
+    background-image: -webkit-linear-gradient(bottom, #5ee7df 0%, #b490ca 100%);
+    background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%); }
+
